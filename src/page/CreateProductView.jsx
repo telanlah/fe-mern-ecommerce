@@ -37,7 +37,7 @@ const CreateProductView = () => {
             // upload file
             console.log("test");
 
-            const responseFileUpload = await axios.post('http://localhost:5173/api/v1/product/file',
+            const responseFileUpload = await customAPI.post('/product/file',
                 { "image": data.image },
                 {
                     headers: {
