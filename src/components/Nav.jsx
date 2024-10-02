@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import customAPI from '../api'
 import { logoutUser } from '../features/userSlice'
 import { clearCartItem } from '../features/cartSlice'
+import axios from 'axios'
 
 const Nav = () => {
     const user = useSelector((state) => state.userState.user)
@@ -16,7 +17,7 @@ const Nav = () => {
 
     const handlingLogout = async () => {
         try {
-            await customAPI.get('/auth/logout')
+            await axios.get(customAPI.defaults.baseURL +'/auth/logout')
             // menghapus cookies
             dispatch(logoutUser())
             dispatch(clearCartItem())

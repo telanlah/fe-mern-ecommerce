@@ -10,7 +10,9 @@ const CartProduct = ({ item, user }) => {
     const { revalidate } = useRevalidator()
 
     const handleDelete = async () => {
-        await customAPI.delete(`/product/${item._id}`)
+        const url = '/product/'
+
+        await axios.delete(customAPI.defaults.baseURL + url + item._id)
         toast.info("Delete Berhasil")
         revalidate()
     }

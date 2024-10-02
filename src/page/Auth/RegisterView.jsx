@@ -4,6 +4,7 @@ import { registerUser } from "../../features/userSlice"
 import { toast } from "react-toastify"
 import customAPI from "../../api"
 import { redirect } from "react-router-dom"
+import axios from "axios"
 
 
 export const action = (store) => async ({ request }) => {
@@ -14,7 +15,7 @@ export const action = (store) => async ({ request }) => {
 
 
   try {
-    const response = await customAPI.post('/auth/register', data)
+    const response = await axios.post(customAPI.defaults.baseURL +'/auth/register', data)
     store.dispatch(registerUser(response.data))
     toast.success("Registrasi berhasil")
     return redirect("/")

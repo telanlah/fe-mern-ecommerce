@@ -7,6 +7,7 @@ import customApi from '../api'
 import { toast } from "react-toastify";
 import { clearCartItem } from '../features/cartSlice';
 import { useNavigate, redirect } from 'react-router-dom'
+import axios from 'axios';
 
 const insertSnapScript = () => {
   return new Promise((resolve) => {
@@ -59,7 +60,7 @@ const CheckOutView = () => {
       }
     })
     try {
-      const response = await customApi.post("/order", {
+      const response = await axios.post(customApi.defaults.baseURL + "/order", {
         email: data.email,
         firstName: data.firstName,
         lastName: data.lastName,

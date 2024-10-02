@@ -2,7 +2,7 @@
 import FormInput from '../components/form/FormInput'
 import FormSelect from '../components/form/FormSelect'
 import FormTextarea from '../components/form/FormTextarea'
-import customAPI from '../api'
+import customAPI, { baseURL } from '../api'
 import { toast } from 'react-toastify'
 import { useNavigate, redirect } from 'react-router-dom'
 import axios from 'axios'
@@ -28,38 +28,38 @@ const CreateProductView = () => {
 
         const form = event.target
         const dataForm = new FormData(form)
-
         const data = Object.fromEntries(dataForm)
-        console.log(data);
+
+        const url = '/product/file';
 
 
         try {
             // upload file
-            console.log("test");
+            console.log("uploading file");
 
-            const responseFileUpload = await axios.post('https://fe-mern-ecommerce-lyart.vercel.app/api/v1/product/file',
-                { "image": data.image },
+            const responseFileUpload = await axios.post(baseURL + url,
+                { image: data.image },
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 },
-            )
+            );
+            const imageUrl = responseFileUpload.data.url;
+            if (responseFileUpload.status === 200) {
+                // create Product
+                await axios.post(customAPI.defaults.baseURL + '/product/', {
+                    name: data.name,
+                    price: data.price,
+                    description: data.description,
+                    stock: data.stock,
+                    category: data.category,
+                    image: imageUrl
+                })
+                toast.success("berhasil input Produk")
+                navigate('/products')
+            }
 
-
-            console.log('reponse image', responseFileUpload.data.url);
-
-            // create Product
-            await customAPI.post('/product/', {
-                name: data.name,
-                price: data.price,
-                description: data.description,
-                stock: data.stock,
-                category: data.category,
-                image: responseFileUpload.data.url
-            })
-            toast.success("berhasil input Produk")
-            navigate('/products')
 
         } catch (error) {
             const errorMessage = error?.response?.data?.message

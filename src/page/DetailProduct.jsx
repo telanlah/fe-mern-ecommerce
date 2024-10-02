@@ -6,6 +6,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { generateSelectAmount, priceFormat } from '../utils/index'
 import { useDispatch } from 'react-redux'
 import { addItem } from '../features/cartSlice';
+import axios from 'axios';
 
 const DetailProduct = () => {
     let { id } = useParams();
@@ -31,7 +32,7 @@ const DetailProduct = () => {
     }
 
     const productData = async () => {
-        const { data } = await customAPI.get('/product/' + id)
+        const { data } = await axios.get(customAPI.defaults.baseURL + '/product/' + id)
         setProduct(data.data)
     }
 

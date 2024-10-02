@@ -1,14 +1,17 @@
 
 import CartProduct from "../components/CartProduct"
-import customAPI from "../api"
+import customAPI, { baseURL } from "../api"
 import { useLoaderData } from "react-router-dom"
 import Hero from "../components/Hero"
+import axios from "axios"
 
 
 export const loader = async ({ request }) => {
-  const { data } = await customAPI.get('/product?limit=3')
+  const url = '/product?limit=3'
+  const { data } = await axios.get(baseURL + url)
 
   const products = data.data
+
   return { products }
 }
 
@@ -16,6 +19,7 @@ export const loader = async ({ request }) => {
 const HomeView = () => {
 
   const { products } = useLoaderData()
+  console.log(products);
 
 
   return (

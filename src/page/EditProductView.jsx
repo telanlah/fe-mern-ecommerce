@@ -6,6 +6,7 @@ import FormSelect from '../components/form/FormSelect'
 import FormInput from '../components/form/FormInput'
 import FormTextarea from '../components/form/FormTextarea'
 import { toast } from "react-toastify";
+import axios from 'axios'
 
 export const loader = (store) => async () => {
   const user = store.getState().userState.user
@@ -27,7 +28,7 @@ const EditProductView = () => {
   const categories = ['sepatu', 'baju', 'kemeja', 'celana']
   const navigate = useNavigate()
   const getProductId = async () => {
-    const { data } = await customAPI.get('/product/' + id)
+    const { data } = await axios.get(customAPI.defaults.baseURL + '/product/' + id)
     setProduct(data.data)
 
   }
@@ -44,7 +45,7 @@ const EditProductView = () => {
     try {
 
       // create Product
-      await customAPI.put('/product/' + id, {
+      await axios.put(customAPI.defaults.baseURL +'/product/' + id, {
         name: data.name,
         price: data.price,
         description: data.description,

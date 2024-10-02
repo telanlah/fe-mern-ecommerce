@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { redirect, useLoaderData } from "react-router-dom";
 import { priceFormat } from "../utils";
 import customAPI from "../api";
+import axios from "axios";
 
 export const loader = (storage) => async () => {
   const user = storage.getState().userState.user
@@ -11,10 +12,10 @@ export const loader = (storage) => async () => {
   }
   let orders
   if (user.role !== 'Owner') {
-    const { data } = await customAPI.get('/order/current/user')
+    const { data } = await axios.get(customAPI.defaults.baseURL +'/order/current/user')
     orders = data.data
   } else {
-    const { data } = await customAPI.get('/order')
+    const { data } = await axios.get(customAPI.defaults.baseURL +'/order')
     orders = data.data
   }
 

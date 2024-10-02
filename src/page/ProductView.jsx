@@ -1,14 +1,17 @@
 import React from 'react'
-import customApi from '../api'
+import customApi,{baseURL} from '../api'
 import { Link, useLoaderData } from 'react-router-dom'
 import Filter from '../components/Filter'
 import CartProduct from '../components/CartProduct'
 import Pagination from '../components/Pagination'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 export const loader = async ({ request }) => {
   const params = Object.fromEntries([...new URL(request.url).searchParams.entries()])
-  const { data } = await customApi.get('/product', { params: params })
+  const url = '/product'
+
+  const { data } = await axios.get(baseURL + url, { params: params })
 
   const products = data.data
   const pagination = data.pagination
