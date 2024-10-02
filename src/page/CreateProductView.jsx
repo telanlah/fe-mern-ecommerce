@@ -37,7 +37,7 @@ const CreateProductView = () => {
             // upload file
             console.log("test");
 
-            const responseFileUpload = await customAPI.post('/product/file',
+            const responseFileUpload = await axios.post('https://fe-mern-ecommerce-lyart.vercel.app/api/v1/product/file',
                 { "image": data.image },
                 {
                     headers: {
